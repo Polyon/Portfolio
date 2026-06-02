@@ -1,0 +1,255 @@
+// Experience section — alternating timeline layout with category filter tabs
+
+.experience-section {
+  position: relative;
+  padding: 6rem 0 4rem;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: -5%;
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(circle, rgba(0, 217, 255, 0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+// ─── Loading / Error / Empty ──────────────────────────────────────────────────
+.experience-loading,
+.experience-error,
+.experience-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 18vh;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.95rem;
+  flex-direction: column;
+  text-align: center;
+
+  mat-icon {
+    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
+    opacity: 0.45;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.experience-error mat-icon {
+  color: rgba(255, 200, 0, 0.7);
+  opacity: 1;
+}
+
+// ─── Container ───────────────────────────────────────────────────────────────
+.experience-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+// ─── Section header ──────────────────────────────────────────────────────────
+.section-header {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.section-eyebrow {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #00D9FF;
+  margin-bottom: 0.6rem;
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 1rem;
+  line-height: 1.15;
+}
+
+.section-divider {
+  width: 3rem;
+  height: 3px;
+  background: linear-gradient(90deg, #00D9FF, transparent);
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+// ─── Filter tabs ─────────────────────────────────────────────────────────────
+.filter-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0;
+}
+
+.filter-tab {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4em 1.1em;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 180ms ease, border-color 180ms ease, color 180ms ease;
+  outline: none;
+
+  &:hover:not(.active) {
+    border-color: rgba(255, 255, 255, 0.3);
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  &.active {
+    background: #E8570A;
+    border-color: #E8570A;
+    color: #ffffff;
+    font-weight: 600;
+  }
+
+  &:focus-visible {
+    box-shadow: 0 0 0 2px rgba(232, 87, 10, 0.5);
+  }
+}
+
+// ─── Divider under filters ───────────────────────────────────────────────────
+.filter-divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 1.75rem 0 3rem;
+}
+
+// ─── Timeline ────────────────────────────────────────────────────────────────
+.experience-timeline {
+  position: relative;
+
+  // Central vertical line
+  &::before {
+    content: '';
+    position: absolute;
+    top: 24px;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 217, 255, 0.05),
+      rgba(0, 217, 255, 0.35) 20%,
+      rgba(0, 217, 255, 0.35) 80%,
+      rgba(0, 217, 255, 0.05)
+    );
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+// ─── Timeline row ─────────────────────────────────────────────────────────────
+.timeline-row {
+  display: grid;
+  grid-template-columns: 1fr 72px 1fr;
+  align-items: flex-start;
+  margin-bottom: 3.5rem;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+// ─── Card slots ──────────────────────────────────────────────────────────────
+.card-slot {
+  &.slot-left {
+    padding-right: 2rem;
+  }
+
+  &.slot-right {
+    padding-left: 2rem;
+  }
+}
+
+// ─── Node ────────────────────────────────────────────────────────────────────
+.node-area {
+  display: flex;
+  justify-content: center;
+  padding-top: 1.5rem;
+  position: relative;
+  z-index: 1;
+}
+
+.node-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #00D9FF;
+  border: 2px solid rgba(0, 217, 255, 0.4);
+  box-shadow: 0 0 8px rgba(0, 217, 255, 0.5);
+  flex-shrink: 0;
+
+  &.node-current {
+    animation: pulse 2s ease-in-out infinite;
+  }
+}
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 8px rgba(0, 217, 255, 0.5); }
+  50%       { box-shadow: 0 0 20px rgba(0, 217, 255, 0.9); }
+}
+
+// ─── Responsive ──────────────────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .experience-container {
+    padding: 0 1rem;
+  }
+
+  // Collapse to single column on tablet/mobile
+  .experience-timeline::before {
+    left: 20px;
+  }
+
+  .timeline-row {
+    grid-template-columns: 48px 1fr;
+    grid-template-rows: auto;
+
+    .slot-left,
+    .slot-right {
+      grid-column: 2;
+      grid-row: 1;
+      padding-left: 1rem;
+      padding-right: 0;
+    }
+
+    .node-area {
+      grid-column: 1;
+      grid-row: 1;
+      padding-top: 1.5rem;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .filter-tabs {
+    gap: 0.35rem;
+  }
+
+  .filter-tab {
+    font-size: 0.78rem;
+    padding: 0.35em 0.9em;
+  }
+}

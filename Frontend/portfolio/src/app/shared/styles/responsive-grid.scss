@@ -1,0 +1,95 @@
+// ─── Responsive Grid Utilities ────────────────────────────────────────────────
+//
+// Shared SCSS mixins and CSS custom properties for the public portal.
+// Import this file into any component stylesheet that needs breakpoint helpers.
+//
+// Usage:
+//   @use 'responsive-grid' as rg;
+//   .my-grid { @include rg.grid-cols(1, 2, 3); }
+//   .my-section { @include rg.respond-to(tablet) { ... } }
+//
+// ─── Breakpoint Map ───────────────────────────────────────────────────────────
+$breakpoints: (
+  'xs':      320px,
+  'sm':      480px,
+  'md':      768px,
+  'lg':      1024px,
+  'xl':      1280px,
+  'xxl':     1440px,
+) !default;
+
+// ─── Respond-to mixin (mobile-first, min-width) ────────────────────────────────
+@mixin respond-to($bp) {
+  $value: map-get($breakpoints, $bp);
+  @if $value {
+    @media (min-width: #{$value}) {
+      @content;
+    }
+  } @else {
+    @warn 'Unknown breakpoint: #{$bp}. Available: #{map-keys($breakpoints)}.';
+  }
+}
+
+// ─── Respond-below mixin (max-width, for exception overrides) ─────────────────
+@mixin respond-below($bp) {
+  $value: map-get($breakpoints, $bp);
+  @if $value {
+    @media (max-width: calc(#{$value} - 1px)) {
+      @content;
+    }
+  } @else {
+    @warn 'Unknown breakpoint: #{$bp}.';
+  }
+}
+
+// ─── grid-cols mixin ─────────────────────────────────────────────────────────
+// Generates a CSS Grid with responsive column counts.
+// Arguments: columns for mobile, tablet (md+), desktop (xl+).
+//
+// @param $mobile  - Column count for <768px (default 1)
+// @param $tablet  - Column count for ≥768px  (default 2)
+// @param $desktop - Column count for ≥1280px (default 3)
+// @param $gap     - Grid gap (default 1.5rem)
+@mixin grid-cols($mobile: 1, $tablet: 2, $desktop: 3, $gap: 1.5rem) {
+  display: grid;
+  grid-template-columns: repeat(#{$mobile}, 1fr);
+  gap: $gap;
+
+  @include respond-to('md') {
+    grid-template-columns: repeat(#{$tablet}, 1fr);
+  }
+
+  @include respond-to('xl') {
+    grid-template-columns: repeat(#{$desktop}, 1fr);
+  }
+}
+
+// ─── section-container mixin ──────────────────────────────────────────────────
+// Standard content container: centred, max-width 1200px, responsive padding.
+@mixin section-container($max-width: 1200px) {
+  max-width: $max-width;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 5vw, 2rem);
+}
+
+// ─── touch-target mixin ───────────────────────────────────────────────────────
+// Ensure a minimum 48×48px touch target for interactive elements (WCAG 2.5.5).
+@mixin touch-target($size: 48px) {
+  min-width: $size;
+  min-height: $size;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ─── CSS Custom Properties (injected at :root via styles.scss) ─────────────────
+// Consumers can reference these vars directly in templates without importing.
+//
+//  --bp-xs    320px
+//  --bp-sm    480px
+//  --bp-md    768px
+//  --bp-lg    1024px
+//  --bp-xl    1280px
+//  --bp-xxl   1440px
+//  --bp-container-max   1200px
+//  --bp-content-padding clamp(1rem, 5vw, 2rem)

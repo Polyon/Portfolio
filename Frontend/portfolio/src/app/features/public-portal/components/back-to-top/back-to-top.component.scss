@@ -1,0 +1,26 @@
+// Sticky floating action button — bottom-right corner
+:host {
+  display: block;
+  position: fixed;
+  bottom: 32px;
+  right: 32px;
+  z-index: 900;
+
+  @media (max-width: 599px) {
+    bottom: 16px;
+    right: 16px;
+  }
+}
+
+.back-to-top-btn {
+  // Use accent color from Material theme (--color-accent / cyan)
+  background-color: var(--color-accent) !important;
+  color: var(--color-primary) !important;
+  box-shadow: 0 4px 16px rgba(0, 217, 255, 0.35) !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 217, 255, 0.5) !important;
+  }
+}

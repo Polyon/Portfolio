@@ -1,0 +1,137 @@
+// Public portal floating glassmorphism header
+.portal-header {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1000;
+  width: calc(100% - 48px);
+  max-width: 1100px;
+  border-radius: 999px;
+
+  // Glassmorphism
+  background: rgba(8, 18, 30, 0.55) !important;
+  backdrop-filter: blur(18px) saturate(160%);
+  -webkit-backdrop-filter: blur(18px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow:
+    0 4px 24px rgba(0, 0, 0, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.06) inset,
+    0 0 0 1px rgba(0, 217, 255, 0.06);
+
+  height: 58px;
+  padding: 0 1.25rem;
+
+  @media (max-width: 767px) {
+    width: calc(100% - 24px);
+    top: 10px;
+    height: 52px;
+    padding: 0 0.75rem;
+  }
+
+  @media (max-width: 479px) {
+    width: calc(100% - 16px);
+    top: 8px;
+    height: 48px;
+  }
+}
+
+// Brand / logo — scales down on small viewports
+.brand {
+  font-size: clamp(1rem, 4vw, 1.25rem);
+  font-weight: 700;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  outline: none;
+
+  // Minimum 48px touch target (T095 / WCAG 2.5.5)
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+
+  &:focus-visible {
+    outline: 2px solid var(--color-accent);
+    border-radius: 4px;
+  }
+}
+
+.brand-accent {
+  color: var(--color-accent);
+}
+
+.spacer {
+  flex: 1 1 auto;
+}
+
+// Desktop navigation
+.desktop-nav {
+  display: flex;
+  gap: 4px;
+
+  @media (max-width: 767px) {
+    display: none;
+  }
+}
+
+.nav-link {
+  color: var(--color-text-secondary) !important;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  transition: color 0.2s ease;
+  // Ensure 48px touch target on desktop too
+  min-height: 44px;
+
+  &:hover {
+    color: var(--color-text-primary) !important;
+  }
+
+  &.active {
+    color: var(--color-accent) !important;
+
+    // Subtle underline indicator for active section
+    &::after {
+      content: '';
+      display: block;
+      height: 2px;
+      background: var(--color-accent);
+      border-radius: 1px;
+      margin-top: -2px;
+    }
+  }
+}
+
+// Mobile hamburger button — 48px touch target (T095)
+.mobile-menu-btn {
+  display: none;
+  color: var(--color-text-primary) !important;
+  width: 48px !important;
+  height: 48px !important;
+
+  @media (max-width: 767px) {
+    display: inline-flex;
+  }
+}
+
+// ─── Mobile nav menu overlay (Material MatMenu) ───────────────────────────────
+// Global override for the portal's mobile menu panel
+::ng-deep .mobile-nav-menu {
+  .mat-mdc-menu-item {
+    // 48px minimum touch target for each menu item
+    min-height: 52px !important;
+    font-size: 1rem;
+    color: var(--color-text-primary);
+
+    .mat-icon {
+      color: var(--color-accent);
+      margin-right: 12px;
+    }
+  }
+
+  .mdc-list-item__primary-text {
+    color: var(--color-text-primary) !important;
+  }
+}
+

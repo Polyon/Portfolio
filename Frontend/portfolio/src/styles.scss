@@ -1,0 +1,326 @@
+// Angular Material theme setup
+@use '@angular/material' as mat;
+
+// CKEditor 5
+@import 'ckeditor5/ckeditor5.css';
+
+// Custom color palettes
+$dark-primary: mat.m2-define-palette(mat.$m2-blue-palette, 900, 700, 900);
+$dark-accent: mat.m2-define-palette(mat.$m2-cyan-palette, A400, A200, A700);
+$dark-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+$dark-theme: mat.m2-define-dark-theme((
+  color: (
+    primary: $dark-primary,
+    accent: $dark-accent,
+    warn: $dark-warn,
+  ),
+  typography: mat.m2-define-typography-config(),
+  density: 0,
+));
+
+@include mat.all-component-themes($dark-theme);
+
+// Glassmorphism & brand CSS variables
+:root {
+  // ── Brand colours ──────────────────────────────────────────────────────────
+  --color-primary: #0D1B2A;
+  --color-accent: #00D9FF;
+  --color-surface: rgba(255, 255, 255, 0.05);
+  --color-surface-border: rgba(0, 217, 255, 0.2);
+  --color-text-primary: #e0e0e0;
+  --color-text-secondary: #a0a0a0;
+
+  // ── Glassmorphism ──────────────────────────────────────────────────────────
+  --glass-bg: rgba(13, 27, 42, 0.8);
+  --glass-blur: blur(12px);
+  --glass-border: 1px solid var(--color-surface-border);
+  --border-radius: 12px;
+  --transition: all 0.3s ease;
+
+  // ── Breakpoints (CSS custom properties for JS/template access) ─────────────
+  --bp-xs:  320px;
+  --bp-sm:  480px;
+  --bp-md:  768px;
+  --bp-lg:  1024px;
+  --bp-xl:  1280px;
+  --bp-xxl: 1440px;
+  --bp-container-max:   1200px;
+  --bp-content-padding: clamp(1rem, 5vw, 2rem);
+
+  // ── Responsive type scale (mobile-first, scales up with clamp) ─────────────
+  --text-xs:   clamp(0.65rem, 1.5vw, 0.75rem);   // 10–12px
+  --text-sm:   clamp(0.75rem, 2vw,   0.875rem);   // 12–14px
+  --text-base: clamp(0.875rem, 2.5vw, 1rem);      // 14–16px
+  --text-md:   clamp(1rem, 2.5vw, 1.125rem);      // 16–18px
+  --text-lg:   clamp(1.125rem, 3vw, 1.375rem);    // 18–22px
+  --text-xl:   clamp(1.25rem, 3.5vw, 1.75rem);    // 20–28px
+  --text-2xl:  clamp(1.5rem, 4vw, 2.25rem);       // 24–36px
+  --text-3xl:  clamp(1.75rem, 5vw, 2.75rem);      // 28–44px
+  --text-4xl:  clamp(2rem, 6vw, 4rem);            // 32–64px — h1 hero
+
+  // ── Section / layout spacing ───────────────────────────────────────────────
+  --section-padding-y: clamp(4rem, 8vw, 6rem);
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+  font-family: 'Roboto', sans-serif;
+}
+
+// Glassmorphism card utility
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border: var(--glass-border);
+  border-radius: var(--border-radius);
+}
+
+// Scrollbar styling
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-primary);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-accent);
+  border-radius: 3px;
+}
+
+// ─── Skip navigation link (WCAG 2.4.1) ──────────────────────────────────────
+// Visually hidden until focused via keyboard — first focusable element on page.
+.skip-nav {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 10000;
+  padding: 0.75rem 1.5rem;
+  background: var(--color-accent);
+  color: var(--color-primary);
+  font-weight: 700;
+  text-decoration: none;
+  border-radius: 0 0 var(--border-radius) 0;
+  transition: top 0.1s ease;
+
+  &:focus {
+    top: 0;
+    outline: 3px solid var(--color-primary);
+    outline-offset: 2px;
+  }
+}
+
+// ─── Responsive images (T099) ─────────────────────────────────────────────────
+img {
+  max-width: 100%;
+  height: auto;
+  display: block; // prevents inline whitespace gap
+}
+
+// Utility class: make any image fully responsive with aspect-ratio preservation
+.responsive-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+// Lazy-load fade-in (applied when the browser finishes loading the image)
+img[loading='lazy'] {
+  opacity: 0;
+  transition: opacity 400ms ease;
+
+  &.loaded {
+    opacity: 1;
+  }
+}
+
+// ─── Responsive typography helpers (T098) ─────────────────────────────────────
+.text-xs   { font-size: var(--text-xs); }
+.text-sm   { font-size: var(--text-sm); }
+.text-base { font-size: var(--text-base); }
+.text-md   { font-size: var(--text-md); }
+.text-lg   { font-size: var(--text-lg); }
+.text-xl   { font-size: var(--text-xl); }
+.text-2xl  { font-size: var(--text-2xl); }
+.text-3xl  { font-size: var(--text-3xl); }
+.text-4xl  { font-size: var(--text-4xl); }
+
+// ─── Global accessibility / focus styles ──────────────────────────────────────
+*:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+// ─── Reduced-motion support (T101) ───────────────────────────────────────────
+// Disable all CSS transitions and animations for users who have requested it.
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+// ─── Touch-target utility (T095) ─────────────────────────────────────────────
+// Ensure interactive elements meet WCAG 2.5.5 48px minimum touch target.
+.touch-target {
+  min-width: 48px;
+  min-height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+// ─── No-scroll utility (used when mobile drawer is open) ─────────────────────
+body.no-scroll {
+  overflow: hidden;
+}
+
+// ─── Angular Material admin overrides ────────────────────────────────────────
+// Override Material M2 dark-theme defaults that don't match the admin palette.
+
+// mat-card: remove the reddish M2 outlined card border
+.mat-mdc-card {
+  --mdc-outlined-card-outline-color: rgba(255, 255, 255, 0.08);
+  --mdc-elevated-card-container-color: transparent;
+  --mdc-outlined-card-container-color: transparent;
+}
+
+// mat-paginator: match admin dark background
+.mat-mdc-paginator {
+  background: transparent !important;
+  color: rgba(255, 255, 255, 0.55);
+  border-top: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+// mat-table: transparent background
+.mat-mdc-table {
+  background: transparent !important;
+}
+
+// mat-progress-spinner: accent color
+.mat-mdc-progress-spinner circle {
+  stroke: var(--color-accent) !important;
+}
+
+// Glass dialog panel ───────────────────────────────────────────────────────────
+// Applied via panelClass: 'glass-dialog' on MatDialog.open()
+.glass-dialog .mat-mdc-dialog-container .mdc-dialog__surface {
+  background: rgba(8, 18, 30, 0.72) !important;
+  backdrop-filter: blur(24px) saturate(160%) !important;
+  -webkit-backdrop-filter: blur(24px) saturate(160%) !important;
+  border: 1px solid rgba(0, 217, 255, 0.22) !important;
+  border-radius: 18px !important;
+  box-shadow:
+    0 32px 80px rgba(0, 0, 0, 0.65),
+    0 0 0 1px rgba(0, 217, 255, 0.08),
+    inset 0 1px 0 rgba(0, 217, 255, 0.15) !important;
+  overflow: hidden;
+}
+
+// Remove default Material dialog padding so our container controls spacing
+.glass-dialog .mat-mdc-dialog-container {
+  --mdc-dialog-container-color: transparent;
+}
+
+// Blurred dark backdrop
+.glass-dialog-backdrop {
+  background: rgba(0, 0, 0, 0.65) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+}
+
+// ─── CKEditor 5 dark theme ────────────────────────────────────────────────────
+// Override CKEditor CSS custom properties to blend with the glassmorphism theme.
+.ck.ck-editor {
+  // Base surfaces
+  --ck-color-base-background:           #0d1b2a;
+  --ck-color-base-foreground:           #0a1622;
+  --ck-color-base-border:               rgba(0, 217, 255, 0.18);
+  --ck-color-base-action:               #00D9FF;
+  --ck-color-base-active:               #00D9FF;
+  --ck-color-base-active-focus:         #33e4ff;
+  --ck-color-focus-border:              rgba(0, 217, 255, 0.6);
+  --ck-color-focus-outer-shadow:        rgba(0, 217, 255, 0.1);
+  --ck-color-text:                      #e0e0e0;
+  --ck-color-shadow-drop:               rgba(0, 0, 0, 0.4);
+  --ck-color-shadow-inner:              rgba(0, 0, 0, 0.25);
+
+  // Toolbar
+  --ck-color-toolbar-background:        #0a1622;
+  --ck-color-toolbar-border:            rgba(0, 217, 255, 0.15);
+
+  // Buttons
+  --ck-color-button-default-background:        transparent;
+  --ck-color-button-default-hover-background:  rgba(0, 217, 255, 0.1);
+  --ck-color-button-default-active-background: rgba(0, 217, 255, 0.15);
+  --ck-color-button-on-background:             rgba(0, 217, 255, 0.18);
+  --ck-color-button-on-hover-background:       rgba(0, 217, 255, 0.28);
+  --ck-color-button-on-color:                  #00D9FF;
+  --ck-color-button-action-background:         #00D9FF;
+  --ck-color-button-action-hover-background:   #33e4ff;
+  --ck-color-button-action-text:               #0d1b2a;
+  --ck-color-button-save:                      #00D9FF;
+  --ck-color-button-cancel:                    #f44336;
+
+  // Editing area
+  --ck-color-editable-focus-border:     rgba(0, 217, 255, 0.5);
+
+  // Panel (dropdowns, popovers)
+  --ck-color-panel-background:          #0a1622;
+  --ck-color-panel-border:              rgba(0, 217, 255, 0.2);
+
+  // Input
+  --ck-color-input-background:          rgba(0, 217, 255, 0.05);
+  --ck-color-input-border:              rgba(0, 217, 255, 0.25);
+  --ck-color-input-text:                #e0e0e0;
+  --ck-color-input-disabled-background: rgba(0, 0, 0, 0.2);
+  --ck-color-input-disabled-border:     rgba(255, 255, 255, 0.1);
+  --ck-color-input-disabled-text:       rgba(255, 255, 255, 0.35);
+
+  // List
+  --ck-color-list-background:           #0a1622;
+  --ck-color-list-button-hover-background:   rgba(0, 217, 255, 0.1);
+  --ck-color-list-button-on-background:      rgba(0, 217, 255, 0.18);
+  --ck-color-list-button-on-text:            #00D9FF;
+  --ck-color-list-button-on-hover-background: rgba(0, 217, 255, 0.28);
+}
+
+// Ensure the editable content area is dark
+.ck.ck-editor__editable {
+  background: rgba(0, 217, 255, 0.03) !important;
+  color: #e0e0e0 !important;
+  min-height: 120px;
+  caret-color: #00D9FF;
+}
+
+.ck.ck-editor__editable.ck-focused {
+  border-color: rgba(0, 217, 255, 0.5) !important;
+  box-shadow: none !important;
+}
+
+// Placeholder text colour
+.ck .ck-placeholder::before,
+.ck.ck-editor__editable .ck-placeholder::before {
+  color: rgba(255, 255, 255, 0.3) !important;
+}
+
+// Toolbar icon/text colour
+.ck.ck-toolbar .ck-toolbar__items .ck-button .ck-icon {
+  color: rgba(255, 255, 255, 0.7);
+}
+.ck.ck-toolbar .ck-toolbar__items .ck-button.ck-on .ck-icon {
+  color: #00D9FF;
+}
+
+// Separator in toolbar
+.ck.ck-toolbar .ck-toolbar__separator {
+  background: rgba(0, 217, 255, 0.15);
+}

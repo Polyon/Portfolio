@@ -1,0 +1,98 @@
+<mat-sidenav-container class="admin-container" autosize>
+  <!-- Sidenav -->
+  <mat-sidenav
+    #sidenav
+    [mode]="(isHandset$ | async)?.matches ? 'over' : 'side'"
+    [opened]="!(isHandset$ | async)?.matches"
+    class="admin-sidenav"
+    [class.sidenav--collapsed]="collapsed">
+
+    <!-- Brand -->
+    <div class="sidenav-brand" [class.sidenav-brand--collapsed]="collapsed">
+      <div class="brand-logo-wrap">
+        <div class="brand-logo">P</div>
+      </div>
+      @if (!collapsed) {
+        <div class="brand-text">
+          <span class="brand-name">Portfolio</span>
+          <span class="brand-sub">Admin Panel</span>
+        </div>
+      }
+    </div>
+
+    <!-- Navigation -->
+    <nav class="sidenav-nav">
+      @if (!collapsed) {
+        <span class="nav-section-label">NAVIGATION</span>
+      }
+      @for (item of navItems; track item.route) {
+        <a
+          class="nav-item"
+          [class.nav-item--collapsed]="collapsed"
+          [routerLink]="item.route"
+          routerLinkActive="nav-item--active"
+          [routerLinkActiveOptions]="item.exactMatch ? { exact: true } : { exact: false }"
+          (click)="closeSidenavOnMobile()"
+          [matTooltip]="collapsed || (isHandset$ | async)?.matches ? item.label : ''"
+          matTooltipPosition="right">
+          <span class="nav-icon-wrap">
+            @if (item.badge$) {
+              <mat-icon
+                class="nav-icon"
+                [matBadge]="(item.badge$ | async) ?? 0"
+                [matBadgeHidden]="((item.badge$ | async) ?? 0) === 0"
+                matBadgeColor="warn"
+                matBadgeSize="small">{{ item.icon }}</mat-icon>
+            } @else {
+              <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
+            }
+          </span>
+          @if (!collapsed) {
+            <span class="nav-label">{{ item.label }}</span>
+          }
+        </a>
+      }
+    </nav>
+
+    <!-- User + logout footer -->
+    <div class="sidenav-user" [class.sidenav-user--collapsed]="collapsed">
+      <div class="sidenav-user-avatar"
+           [matTooltip]="collapsed ? (currentUser?.email ?? '') : ''"
+           matTooltipPosition="right">{{ userInitial }}</div>
+      @if (!collapsed) {
+        <div class="sidenav-user-info">
+          <span class="sidenav-user-email">{{ currentUser?.email }}</span>
+          <span class="sidenav-user-role">{{ currentUser?.role ?? 'Admin' }}</span>
+        </div>
+        <button class="sidenav-logout" (click)="logout()" matTooltip="Logout" matTooltipPosition="above">
+          <mat-icon>logout</mat-icon>
+        </button>
+      } @else {
+        <button class="sidenav-logout" (click)="logout()" matTooltip="Logout" matTooltipPosition="right">
+          <mat-icon>logout</mat-icon>
+        </button>
+      }
+    </div>
+  </mat-sidenav>
+
+  <!-- Main content -->
+  <mat-sidenav-content class="admin-content">
+    <!-- Header -->
+    <header class="admin-header">
+      <div class="header-left">
+        <button mat-icon-button class="menu-toggle" (click)="toggleSidenav()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <app-breadcrumb></app-breadcrumb>
+      </div>
+      <div class="header-right">
+        <app-user-menu></app-user-menu>
+      </div>
+    </header>
+
+    <!-- Page content -->
+    <main class="admin-main">
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

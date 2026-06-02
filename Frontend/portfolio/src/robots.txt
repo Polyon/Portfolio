@@ -1,0 +1,28 @@
+# robots.txt for Portfolio Public Site
+# Generated for Angular SSR portfolio application
+
+# Allow all search engine crawlers
+User-agent: *
+
+# Allow all public portfolio sections
+Allow: /
+Allow: /#about
+Allow: /#skills
+Allow: /#experience
+Allow: /#projects
+Allow: /#services
+Allow: /#contact
+Allow: /assets/
+
+# Disallow admin portal and API routes
+Disallow: /admin/
+Disallow: /admin
+Disallow: /login
+Disallow: /api/
+
+# Disallow Angular source map and config files
+Disallow: /*.map$
+Disallow: /environment*.js
+
+# Sitemap location
+Sitemap: http://localhost:4200/assets/sitemap.xml

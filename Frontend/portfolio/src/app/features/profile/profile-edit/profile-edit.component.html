@@ -1,0 +1,202 @@
+<div class="profile-edit">
+  @if (isLoading()) {
+    <div class="loading-center">
+      <mat-spinner diameter="40" color="accent"></mat-spinner>
+    </div>
+  } @else {
+    <!-- Page header row -->
+    <div class="profile-header">
+      <div class="header-title-row">
+        <h2>
+          Edit Portfolio Profile
+          @if (hasUnsavedChanges()) {
+            <span class="unsaved-dot" matTooltip="Unsaved changes"></span>
+          }
+        </h2>
+      </div>
+      <div class="header-actions">
+        @if (autoSaveStatus()) {
+          <span class="auto-save-status">{{ autoSaveStatus() }}</span>
+        }
+        <mat-slide-toggle
+          [checked]="profile()?.isPublished ?? false"
+          (change)="togglePublish()"
+          color="accent">
+          {{ profile()?.isPublished ? 'Published' : 'Draft' }}
+        </mat-slide-toggle>
+        @if (isSaving()) {
+          <button class="save-btn save-btn--loading" type="button" disabled>
+            <mat-spinner diameter="16" color="accent"></mat-spinner>
+            Saving…
+          </button>
+        } @else {
+          <button class="save-btn" type="button" [disabled]="profileForm.invalid" (click)="save()">
+            <mat-icon>save</mat-icon>
+            Save Changes
+          </button>
+        }
+      </div>
+    </div>
+
+    <form [formGroup]="profileForm" (ngSubmit)="save()" class="profile-form">
+
+      <!-- Profile image section (top) -->
+      <div class="form-section glass-card">
+        <div class="section-header">
+          <mat-icon class="section-icon">image</mat-icon>
+          <span class="section-title">Profile Image</span>
+        </div>
+        <app-image-upload
+          [currentImageUrl]="profile()?.profileImageUrl"
+          [uploading]="isImageUploading()"
+          (imageSelected)="onImageSelected($event)"
+          (imageCleared)="onImageCleared()">
+        </app-image-upload>
+      </div>
+
+      <!-- General section -->
+      <div class="form-section glass-card">
+        <div class="section-header">
+          <mat-icon class="section-icon">person_outline</mat-icon>
+          <span class="section-title">General</span>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label">First Name</label>
+            <input class="field-input" formControlName="firstName" placeholder="Enter first name" />
+            @if (profileForm.get('firstName')?.touched && profileForm.get('firstName')?.hasError('required')) {
+              <span class="field-error">First name is required</span>
+            }
+          </div>
+          <div class="field-group">
+            <label class="field-label">Last Name</label>
+            <input class="field-input" formControlName="lastName" placeholder="Enter last name" />
+            @if (profileForm.get('lastName')?.touched && profileForm.get('lastName')?.hasError('required')) {
+              <span class="field-error">Last name is required</span>
+            }
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Tagline</label>
+          <input class="field-input" formControlName="tagline" placeholder="e.g. Backend Developer & AI Enthusiast" />
+          <span class="field-hint">{{ profileForm.get('tagline')?.value?.length || 0 }}/200</span>
+        </div>
+
+        <div class="field-group">
+          <div class="field-label-row">
+            <label class="field-label">Bio</label>
+            <div class="preview-toggle-bar">
+              <button type="button" mat-icon-button class="preview-toggle-btn"
+                [class.active]="!showBioPreview()"
+                (click)="showBioPreview.set(false)"
+                matTooltip="Edit">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button type="button" mat-icon-button class="preview-toggle-btn"
+                [class.active]="showBioPreview()"
+                (click)="showBioPreview.set(true)"
+                matTooltip="Preview rendered output">
+                <mat-icon>visibility</mat-icon>
+              </button>
+            </div>
+          </div>
+          @if (!showBioPreview()) {
+            @if (isBrowser) {
+              <div class="ck-wrap">
+                <ckeditor
+                  [editor]="Editor"
+                  [config]="editorConfig"
+                  formControlName="bio">
+                </ckeditor>
+              </div>
+            } @else {
+              <textarea class="field-input field-textarea" formControlName="bio" rows="5"
+                placeholder="Tell your story..."></textarea>
+            }
+          } @else {
+            <div class="rich-text-preview-panel">
+              @if (profileForm.get('bio')?.value) {
+                <app-rich-text [content]="profileForm.get('bio')?.value"></app-rich-text>
+              } @else {
+                <p class="preview-empty">Nothing to preview — write something in the editor first.</p>
+              }
+            </div>
+          }
+          <span class="field-hint">{{ charCount }}/5000 characters</span>
+        </div>
+      </div>
+
+      <!-- Location section -->
+      <div class="form-section glass-card">
+        <div class="section-header">
+          <mat-icon class="section-icon">location_on</mat-icon>
+          <span class="section-title">Location</span>
+        </div>
+        <div class="field-row three-col">
+          <div class="field-group">
+            <label class="field-label">City</label>
+            <input class="field-input" formControlName="city" placeholder="City" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">State / Province</label>
+            <input class="field-input" formControlName="state" placeholder="State" />
+          </div>
+          <div class="field-group">
+            <label class="field-label">Country</label>
+            <input class="field-input" formControlName="country" placeholder="Country" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact section -->
+      <div class="form-section glass-card">
+        <div class="section-header">
+          <mat-icon class="section-icon">mail_outline</mat-icon>
+          <span class="section-title">Contact</span>
+        </div>
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label">Email</label>
+            <input class="field-input" formControlName="email" type="email" placeholder="your@email.com" />
+            @if (profileForm.get('email')?.touched && profileForm.get('email')?.hasError('email')) {
+              <span class="field-error">Enter a valid email</span>
+            }
+          </div>
+          <div class="field-group">
+            <label class="field-label">Phone Number</label>
+            <input class="field-input" formControlName="phone" placeholder="+1 234 567 8900" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Socials section -->
+      <div class="form-section glass-card">
+        <div class="section-header">
+          <mat-icon class="section-icon">share</mat-icon>
+          <span class="section-title">Socials</span>
+        </div>
+        <div class="field-row">
+          <div class="field-group">
+            <label class="field-label">LinkedIn URL</label>
+            <div class="field-input-icon-wrap">
+              <mat-icon class="input-prefix-icon">work_outline</mat-icon>
+              <input class="field-input field-input--icon" formControlName="linkedinUrl"
+                placeholder="https://linkedin.com/in/username" />
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">GitHub URL</label>
+            <div class="field-input-icon-wrap">
+              <mat-icon class="input-prefix-icon">code</mat-icon>
+              <input class="field-input field-input--icon" formControlName="githubUrl"
+                placeholder="https://github.com/username" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </form>
+  }
+</div>

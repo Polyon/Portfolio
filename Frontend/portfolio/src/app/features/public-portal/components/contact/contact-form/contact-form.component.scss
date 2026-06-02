@@ -1,0 +1,574 @@
+// Contact inquiry form — glassmorphism card wrapper, Material input overrides
+
+:host {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+// ─── Form wrapper ─────────────────────────────────────────────────────────────
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: 100%;
+}
+
+// ─── Form fields ─────────────────────────────────────────────────────────────
+
+// Blue accent for focused inputs
+:host ::ng-deep .mat-mdc-form-field.mat-focused {
+  .mdc-notched-outline__leading,
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    border-color: #4361ee !important;
+  }
+
+  .mat-mdc-floating-label {
+    color: #4361ee !important;
+  }
+}
+
+// Transparent input — dark background shows through
+:host ::ng-deep .mat-mdc-text-field-wrapper.mdc-text-field--outlined {
+  background: transparent !important;
+  border-radius: 8px;
+}
+
+// Collapse the notch in the top border (no floating label needed)
+:host ::ng-deep .mat-mdc-form-field .mdc-notched-outline__notch {
+  border-top: 1px solid rgba(255, 255, 255, 0.18) !important;
+  width: 0 !important;
+  padding: 0 !important;
+}
+
+:host ::ng-deep .mat-mdc-form-field .mat-mdc-floating-label {
+  display: none !important;
+}
+
+:host ::ng-deep .mat-mdc-form-field .mat-mdc-input-element {
+  color: rgba(255, 255, 255, 0.9) !important;
+  caret-color: #4361ee;
+}
+
+:host ::ng-deep .mat-mdc-form-field .mat-mdc-input-element::placeholder {
+  color: rgba(255, 255, 255, 0.3) !important;
+  opacity: 1;
+}
+
+// ─── Custom field labels ──────────────────────────────────────────────────────
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  width: 100%;
+}
+
+.field-label {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.65);
+  letter-spacing: 0.01em;
+}
+
+.req-star {
+  color: rgba(255, 255, 255, 0.45);
+}
+
+// Subtle white outline when not focused
+:host ::ng-deep .mat-mdc-form-field:not(.mat-focused) {
+  .mdc-notched-outline__leading,
+  .mdc-notched-outline__notch,
+  .mdc-notched-outline__trailing {
+    border-color: rgba(255, 255, 255, 0.18) !important;
+  }
+
+  .mat-mdc-floating-label {
+    color: rgba(255, 255, 255, 0.45) !important;
+  }
+}
+
+.form-field {
+  width: 100%;
+
+  &--textarea textarea {
+    resize: vertical;
+    min-height: 120px;
+  }
+}
+
+// ─── Rich-text (CKEditor) field wrapper ──────────────────────────────────────
+.ck-field-wrapper {
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  overflow: hidden;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+
+  &--focused {
+    border-color: #4361ee;
+    box-shadow: 0 0 0 1px rgba(67, 97, 238, 0.25);
+  }
+
+  &--error {
+    border-color: rgba(244, 67, 54, 0.7);
+  }
+}
+
+// ─── Toolbar toggle button ────────────────────────────────────────────────────
+.ck-toolbar-toggle {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  border-radius: 6px;
+  background: rgba(18, 28, 52, 0.82);
+  color: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  transition: background 150ms ease, color 150ms ease, border-color 150ms ease;
+  backdrop-filter: blur(4px);
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    line-height: 1;
+  }
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.9);
+    border-color: rgba(255, 255, 255, 0.25);
+  }
+
+  &--active {
+    background: rgba(67, 97, 238, 0.25);
+    color: #7b9aff;
+    border-color: rgba(67, 97, 238, 0.45);
+  }
+}
+
+// CKEditor dark-theme variable overrides + structural fixes
+:host ::ng-deep .ck-field-wrapper {
+  // CSS variable overrides applied at the container level
+  --ck-color-base-background: transparent;
+  --ck-color-base-border: rgba(255, 255, 255, 0.1);
+  --ck-color-text: rgba(255, 255, 255, 0.9);
+  --ck-color-toolbar-background: rgba(255, 255, 255, 0.04);
+  --ck-color-toolbar-border: rgba(255, 255, 255, 0.1);
+  --ck-color-button-default-background: transparent;
+  --ck-color-button-default-hover-background: rgba(255, 255, 255, 0.08);
+  --ck-color-button-on-background: rgba(67, 97, 238, 0.2);
+  --ck-color-button-on-hover-background: rgba(67, 97, 238, 0.3);
+  --ck-color-button-default-active-background: rgba(255, 255, 255, 0.08);
+  --ck-color-focus-border: #4361ee;
+  --ck-color-shadow-drop: rgba(0, 0, 0, 0.4);
+  --ck-color-shadow-inner: rgba(0, 0, 0, 0.2);
+
+  // Remove CKEditor's own outer border/shadow (our wrapper provides it)
+  // Make the editor container relative so we can float the toolbar
+  .ck.ck-editor {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent;
+    position: relative !important;
+  }
+
+  // Float the toolbar into the top-right corner of the field
+  .ck.ck-editor__top {
+    position: absolute !important;
+    top: 8px !important;
+    right: 48px !important; // offset right of the toggle button
+    z-index: 2 !important;
+    // Collapsed by default — shown only when wrapper has --toolbar-open
+    opacity: 0;
+    pointer-events: none;
+    transform: scale(0.92) translateY(-4px);
+    transition: opacity 160ms ease, transform 160ms ease;
+  }
+
+  // Toolbar styling — compact floating pill
+  .ck.ck-toolbar {
+    background: rgba(18, 28, 52, 0.88) !important;
+    border: 1px solid rgba(255, 255, 255, 0.13) !important;
+    border-radius: 7px !important;
+    padding: 2px 5px !important;
+    backdrop-filter: blur(6px);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35) !important;
+
+    .ck-toolbar__items .ck-toolbar__separator {
+      background: rgba(255, 255, 255, 0.15) !important;
+    }
+  }
+
+  // Toolbar buttons
+  .ck.ck-button {
+    color: rgba(255, 255, 255, 0.65) !important;
+    border-radius: 4px !important;
+    min-width: 28px !important;
+    height: 28px !important;
+    padding: 0 4px !important;
+
+    &:hover:not(.ck-disabled) {
+      background: rgba(255, 255, 255, 0.1) !important;
+      color: rgba(255, 255, 255, 0.9) !important;
+    }
+
+    &.ck-on {
+      background: rgba(67, 97, 238, 0.3) !important;
+      color: #7b9aff !important;
+    }
+
+    .ck-icon {
+      width: 14px !important;
+      height: 14px !important;
+    }
+  }
+}
+
+// When toolbar is open: reveal the toolbar pill and expand editable right-padding
+:host ::ng-deep .ck-field-wrapper--toolbar-open {
+  .ck.ck-editor__top {
+    opacity: 1 !important;
+    pointer-events: all !important;
+    transform: scale(1) translateY(0) !important;
+  }
+
+  .ck-editor__editable {
+    padding-right: 210px !important;
+  }
+}
+
+// Editable area and dropdown panels (kept separate to avoid deep nesting issues)
+:host ::ng-deep .ck-field-wrapper .ck-editor__editable {
+    background: transparent !important;
+    color: rgba(255, 255, 255, 0.9) !important;
+    caret-color: #ffffff;
+    min-height: 155px;
+    padding: 0.75rem 1rem !important;
+    padding-right: 48px !important; // just enough for the toggle button
+    border: none !important;
+    box-shadow: none !important;
+
+    &.ck-focused {
+      border: none !important;
+      box-shadow: none !important;
+    }
+
+    // Placeholder text
+    &.ck-placeholder::before {
+      color: rgba(255, 255, 255, 0.3) !important;
+    }
+
+    // Content typography
+    p { margin: 0 0 0.5em; &:last-child { margin-bottom: 0; } }
+    ul, ol { padding-left: 1.25rem; margin: 0 0 0.5em; }
+    a { color: #7b9aff; text-decoration: underline; }
+}
+
+// Dropdown / balloon panels (link UI, etc.)
+:host ::ng-deep .ck-field-wrapper {
+  .ck.ck-dropdown__panel,
+  .ck.ck-balloon-panel {
+    background: #1a2340 !important;
+    border: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+
+    .ck-button { color: rgba(255, 255, 255, 0.8) !important; }
+    .ck-input-text {
+      background: rgba(255, 255, 255, 0.06) !important;
+      border-color: rgba(255, 255, 255, 0.15) !important;
+      color: rgba(255, 255, 255, 0.9) !important;
+    }
+    .ck-labeled-field-view__status { color: rgba(255, 255, 255, 0.5) !important; }
+  }
+}
+
+// Inline field error (below CKEditor wrapper)
+.field-error {
+  font-size: 0.75rem;
+  color: #f44336;
+  padding: 0 0.25rem;
+}
+
+// SSR fallback: plain textarea shown server-side before CKEditor hydrates
+.ck-ssr-placeholder {
+  display: block;
+  width: 100%;
+  min-height: 130px;
+  padding: 0.75rem 1rem;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.875rem;
+  font-family: inherit;
+  resize: vertical;
+  box-sizing: border-box;
+
+  &::placeholder { color: rgba(255, 255, 255, 0.3); }
+}
+
+// Two-column row for Name + Email
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+
+  @media (max-width: 520px) {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+.optional-hint {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+// ─── Server error banner ──────────────────────────────────────────────────────
+.form-error-banner {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.75rem 1rem;
+  background: rgba(255, 100, 80, 0.1);
+  border: 1px solid rgba(255, 100, 80, 0.3);
+  border-radius: 8px;
+  color: rgba(255, 180, 170, 0.9);
+  font-size: 0.875rem;
+
+  mat-icon { flex-shrink: 0; font-size: 1.1rem; width: 1.1rem; height: 1.1rem; color: #ff8070; }
+  span { flex: 1; }
+}
+
+.retry-btn {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  color: rgba(255, 180, 170, 0.9) !important;
+  border-color: rgba(255, 100, 80, 0.4) !important;
+  height: 28px;
+  line-height: 28px;
+  padding: 0 0.75rem;
+}
+
+// ─── Inquiry type toggle ─────────────────────────────────────────────────────
+
+.form-field--toggle {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.25rem 0;
+  background: transparent;
+  border: none;
+}
+
+.toggle-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+}
+
+:host ::ng-deep .query-type-toggle {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  gap: 0.5rem;
+
+  // Remove the default Material border between buttons
+  .mat-button-toggle-group-appearance-standard {
+    border: none;
+  }
+
+  .mat-button-toggle {
+    flex: 1;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 8px !important;
+    background: rgba(255, 255, 255, 0.04);
+    overflow: hidden;
+    transition:
+      background 200ms ease,
+      border-color 200ms ease,
+      box-shadow 200ms ease;
+
+    &:hover:not(.mat-button-toggle-checked) {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.2) !important;
+    }
+
+    &.mat-button-toggle-checked {
+      background: rgba(255, 255, 255, 0.08) !important;
+      border-color: rgba(255, 255, 255, 0.75) !important;
+      box-shadow: none;
+
+      .mat-button-toggle-label-content {
+        color: rgba(255, 255, 255, 0.95);
+      }
+
+      mat-icon {
+        color: rgba(255, 255, 255, 0.95);
+      }
+    }
+  }
+
+  .mat-button-toggle-label-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    padding: 0.6rem 1rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.65);
+    transition: color 200ms ease;
+    line-height: 1;
+
+    mat-icon {
+      font-size: 1.05rem;
+      width: 1.05rem;
+      height: 1.05rem;
+      line-height: 1;
+      color: rgba(255, 255, 255, 0.5);
+      transition: color 200ms ease;
+    }
+  }
+
+  // Inner button element — always centred regardless of checked state
+  .mat-button-toggle-button {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+  }
+
+  // Hide the built-in pseudo-checkbox checkmark always
+  .mat-pseudo-checkbox {
+    display: none !important;
+  }
+
+  // Hide the built-in focus overlay ripple
+  .mat-button-toggle-appearance-standard .mat-button-toggle-focus-overlay {
+    display: none;
+  }
+}
+
+// ─── Actions ─────────────────────────────────────────────────────────────────
+.form-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+// Force gradient through Material's disabled-state overrides
+:host ::ng-deep .submit-btn.mat-mdc-button-base:not([disabled]):not(.mdc-button--disabled) {
+  background: linear-gradient(135deg, #4361ee 0%, #7c3aed 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 20px rgba(99, 60, 237, 0.35) !important;
+
+  &:hover {
+    box-shadow: 0 6px 28px rgba(99, 60, 237, 0.55) !important;
+    transform: translateY(-1px);
+  }
+}
+
+.submit-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  height: 48px;
+  border-radius: 8px !important;
+  border: none !important;
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  transition: box-shadow 200ms ease, transform 150ms ease !important;
+
+  &:disabled,
+  &[disabled] {
+    background: rgba(255, 255, 255, 0.07) !important;
+    box-shadow: none !important;
+    color: rgba(255, 255, 255, 0.28) !important;
+  }
+
+  mat-icon {
+    font-size: 1.1rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  span {
+    line-height: 1;
+  }
+}
+
+.btn-content {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  line-height: 1;
+}
+
+.btn-spinner {
+  // spinner inside button — use inline-flex centering
+  ::ng-deep circle { stroke: currentColor; }
+}
+
+// ─── Success state ────────────────────────────────────────────────────────────
+.form-success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.75rem;
+  padding: 3rem 1.5rem;
+  background: rgba(0, 217, 255, 0.04);
+  border: 1px solid rgba(0, 217, 255, 0.15);
+  border-radius: 16px;
+  animation: fadeInUp 400ms cubic-bezier(0.35, 0, 0.25, 1) both;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.success-icon {
+  font-size: 3rem;
+  width: 3rem;
+  height: 3rem;
+  color: #4aff91;
+}
+
+.success-title {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.success-body {
+  margin: 0;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 360px;
+  line-height: 1.6;
+}
+
+.success-reset-btn {
+  margin-top: 0.5rem;
+}

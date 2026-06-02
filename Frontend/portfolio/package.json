@@ -1,0 +1,63 @@
+{
+  "name": "portfolio",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "build:stats": "ng build --stats-json",
+    "build:analyze": "ng build --stats-json && npx webpack-bundle-analyzer dist/portfolio/browser/stats.json",
+    "watch": "ng build --watch --configuration development",
+    "test": "ng test",
+    "serve:ssr:portfolio": "node dist/portfolio/server/server.mjs",
+    "lighthouse": "node scripts/lighthouse-perf.mjs",
+    "lighthouse:ci": "node scripts/lighthouse-perf.mjs http://localhost:4200",
+    "validate:seo": "node scripts/validate-seo.js"
+  },
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "overrides": [
+      {
+        "files": "*.html",
+        "options": {
+          "parser": "angular"
+        }
+      }
+    ]
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "^21.2.13",
+    "@angular/cdk": "^21.2.11",
+    "@angular/common": "^21.2.13",
+    "@angular/compiler": "^21.2.13",
+    "@angular/core": "^21.2.13",
+    "@angular/forms": "^21.2.13",
+    "@angular/material": "^21.2.11",
+    "@angular/platform-browser": "^21.2.13",
+    "@angular/platform-server": "^21.2.13",
+    "@angular/router": "^21.2.13",
+    "@angular/ssr": "^21.2.11",
+    "@ckeditor/ckeditor5-angular": "^11.1.2",
+    "ckeditor5": "^48.1.0",
+    "express": "^5.1.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.2.11",
+    "@angular/cli": "^21.2.11",
+    "@angular/compiler-cli": "^21.2.13",
+    "@types/express": "^5.0.1",
+    "@types/jasmine": "~5.1.0",
+    "@types/node": "^20.17.19",
+    "jasmine-core": "~5.9.0",
+    "karma": "~6.4.0",
+    "karma-chrome-launcher": "~3.2.0",
+    "karma-coverage": "~2.2.0",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "~2.1.0",
+    "typescript": "~5.9.2"
+  }
+}

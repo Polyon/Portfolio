@@ -1,0 +1,140 @@
+// Public portal footer — glassmorphism panel
+.portal-footer {
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border-top: var(--glass-border);
+  padding: 48px 24px 24px;
+  margin-top: 64px;
+}
+
+.footer-content {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  @media (max-width: 767px) {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+// Brand
+.footer-brand {
+  .brand-accent {
+    color: var(--color-accent);
+    font-size: 1.25rem;
+    font-weight: 700;
+  }
+
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+}
+
+.footer-tagline {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+// Section titles
+.footer-section-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin: 0 0 12px;
+}
+
+// Quick links column
+.footer-quick-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+
+.footer-link {
+  color: var(--color-text-secondary) !important;
+  font-size: 0.875rem;
+  text-align: left;
+  padding: 4px 8px;
+  min-width: unset;
+  // 48px touch target on mobile (T097 / WCAG 2.5.5)
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+
+  &:hover {
+    color: var(--color-text-primary) !important;
+  }
+}
+
+// Social icons
+.social-icons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.social-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  // 48px touch target on mobile (T097)
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(0, 217, 255, 0.08);
+  border: 1px solid rgba(0, 217, 255, 0.2);
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  transition: var(--transition);
+
+  &:hover {
+    background: rgba(0, 217, 255, 0.18);
+    color: var(--color-accent);
+    transform: translateY(-2px);
+  }
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// Bottom bar
+.footer-divider {
+  margin: 32px auto;
+  max-width: 1200px;
+  border-color: var(--color-surface-border) !important;
+}
+
+.footer-bottom {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.copyright {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+
+.heart-icon {
+  font-size: 14px;
+  width: 14px;
+  height: 14px;
+  color: #e53935;
+  vertical-align: middle;
+}

@@ -1,0 +1,196 @@
+// About section — glassmorphism dark layout
+// Responsive: single column (mobile) → two-column grid (desktop)
+
+.about-section {
+  position: relative;
+  padding: 6rem 0 4rem;
+  overflow: hidden;
+
+  // Subtle background glow (left side, complementing hero's right-side glow)
+  &::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0, 217, 255, 0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+// ─── Loading & Error ────────────────────────────────────────────────────────
+.about-loading,
+.about-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 40vh;
+  gap: 0.75rem;
+}
+
+.about-error {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.95rem;
+
+  mat-icon {
+    color: rgba(255, 200, 0, 0.7);
+  }
+}
+
+// ─── Container ──────────────────────────────────────────────────────────────
+.about-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+// ─── Section header ─────────────────────────────────────────────────────────
+.about-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.section-eyebrow {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #00D9FF;
+  margin-bottom: 0.6rem;
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 1rem;
+  line-height: 1.15;
+}
+
+.section-divider {
+  width: 3rem;
+  height: 3px;
+  background: linear-gradient(90deg, #00D9FF, transparent);
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+// ─── Two-column content grid ─────────────────────────────────────────────────
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 4rem;
+
+  // Tablet and below: single column, image on top
+  @media (max-width: 1023px) {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    text-align: center;
+  }
+}
+
+// ─── Text column ────────────────────────────────────────────────────────────
+.about-text-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+// Location row
+.about-location {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.9rem;
+
+  mat-icon {
+    font-size: 1.1rem;
+    width: 1.1rem;
+    height: 1.1rem;
+    color: #00D9FF;
+    flex-shrink: 0;
+  }
+
+  // Center on mobile
+  @media (max-width: 1023px) {
+    justify-content: center;
+  }
+}
+
+// CV download button
+.cv-button {
+  align-self: flex-start;
+  color: #00D9FF !important;
+  border-color: rgba(0, 217, 255, 0.4) !important;
+  font-weight: 600;
+  height: 44px;
+  padding: 0 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  transition: border-color 200ms ease, background-color 200ms ease;
+
+  mat-icon {
+    margin-right: 0.35rem;
+    font-size: 1.1rem;
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+  &:hover {
+    border-color: #00D9FF !important;
+    background-color: rgba(0, 217, 255, 0.06) !important;
+  }
+
+  // Center on mobile
+  @media (max-width: 1023px) {
+    align-self: center;
+  }
+}
+
+// ─── Image column ────────────────────────────────────────────────────────────
+.about-image-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  // Force image column above text on mobile
+  @media (max-width: 1023px) {
+    order: -1;
+  }
+}
+
+.about-image-wrapper {
+  position: relative;
+
+  // Decorative corner accent
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    right: -10px;
+    width: 60%;
+    height: 60%;
+    border-bottom: 2px solid rgba(0, 217, 255, 0.25);
+    border-right: 2px solid rgba(0, 217, 255, 0.25);
+    border-radius: 0 0 12px 0;
+    pointer-events: none;
+  }
+
+  // Image rendered by app-image-fallback gets rounded corners via the host
+  app-image-fallback {
+    display: block;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.45),
+      0 0 0 1px rgba(255, 255, 255, 0.06);
+  }
+}

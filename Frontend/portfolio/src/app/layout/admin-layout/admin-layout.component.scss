@@ -1,0 +1,539 @@
+// ── Container ─────────────────────────────────────────────────────────────────
+.admin-container {
+  height: 100vh;
+  background-color: var(--color-primary);
+
+  // Smooth content-area margin when sidenav width animates
+  ::ng-deep .mat-drawer-content {
+    transition: margin-left 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+  }
+}
+
+// Angular Material wraps sidenav content in .mat-drawer-inner-container
+.admin-sidenav ::ng-deep .mat-drawer-inner-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden; // clip labels during width transition
+}
+
+// ── Brand section ─────────────────────────────────────────────────────────────
+.sidenav-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 22px 18px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+}
+
+.brand-logo-wrap {
+  flex-shrink: 0;
+}
+
+.brand-logo {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #0055cc 0%, #00D9FF 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: #fff;
+  box-shadow: 0 0 16px rgba(0, 217, 255, 0.35);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+}
+
+.brand-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+}
+
+.brand-sub {
+  font-size: 0.68rem;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  white-space: nowrap;
+}
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+.sidenav-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 16px 12px 8px;
+  overflow-y: auto;
+  gap: 1px;
+}
+
+.nav-section-label {
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: rgba(255, 255, 255, 0.2);
+  padding: 0 8px 10px;
+  display: block;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.48);
+  font-size: 0.868rem;
+  font-weight: 500;
+  transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease;
+  position: relative;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.82);
+
+    .nav-icon-wrap {
+      background: rgba(0, 217, 255, 0.1);
+    }
+  }
+
+  &--active {
+    background: rgba(0, 217, 255, 0.1) !important;
+    color: #fff !important;
+    box-shadow: inset 3px 0 0 var(--color-accent);
+
+    .nav-icon-wrap {
+      background: rgba(0, 217, 255, 0.15);
+    }
+
+    .nav-icon {
+      color: var(--color-accent) !important;
+    }
+  }
+}
+
+.nav-icon-wrap {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: background 0.18s ease;
+}
+
+.nav-icon {
+  font-size: 19px;
+  width: 19px;
+  height: 19px;
+  color: inherit;
+}
+
+.nav-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// ── User / logout footer ──────────────────────────────────────────────────────
+.sidenav-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 14px 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  flex-shrink: 0;
+  margin-top: auto;
+}
+
+.sidenav-user-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0055cc, #00D9FF);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.sidenav-user-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.sidenav-user-email {
+  font-size: 0.75rem;
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidenav-user-role {
+  font-size: 0.65rem;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.sidenav-logout {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 80, 80, 0.08);
+  color: rgba(255, 120, 120, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  flex-shrink: 0;
+
+  mat-icon {
+    font-size: 17px;
+    width: 17px;
+    height: 17px;
+  }
+
+  &:hover {
+    background: rgba(255, 70, 70, 0.2);
+    color: #ff6b6b;
+  }
+}
+
+// ── Main content ──────────────────────────────────────────────────────────────
+.admin-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--color-primary);
+}
+
+// ── Header ────────────────────────────────────────────────────────────────────
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 28px;
+  height: 60px;
+  flex-shrink: 0;
+  background: rgba(7, 15, 30, 0.85);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid rgba(0, 217, 255, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+
+
+.menu-toggle {
+  // Always visible — collapses sidenav on desktop, toggles open/close on mobile
+}
+
+// ── Page area ─────────────────────────────────────────────────────────────────
+.admin-main {
+  flex: 1;
+  min-width: 0;
+  padding: 28px 32px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .admin-main { padding: 16px; }
+  .admin-sidenav { width: 220px; }
+  .header-email { display: none; }
+  .header-user-chip { padding: 5px; border: none; background: none; }
+}
+
+@media (min-width: 1280px) {
+  .admin-main { padding: 32px 40px; }
+}
+
+
+// ── Sidenav ───────────────────────────────────────────────────────────────────
+.admin-sidenav {
+  width: 228px;
+  background: #0a1628 !important;
+  border-right: 1px solid rgba(0, 217, 255, 0.10) !important;
+  display: flex;
+  flex-direction: column;
+  transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+
+  // remove default mat-sidenav box-shadow on side mode
+  box-shadow: none !important;
+
+  &.sidenav--collapsed {
+    width: 64px;
+
+    // Brand: center the logo mark
+    .sidenav-brand--collapsed {
+      justify-content: center;
+      padding: 18px 0;
+      gap: 0;
+    }
+
+    // Nav: center icons, remove horizontal padding
+    .sidenav-nav {
+      padding: 12px 0 8px;
+      align-items: center;
+    }
+
+    // Nav items: icon-only pill centered
+    .nav-item--collapsed {
+      justify-content: center;
+      padding: 9px 0;
+      gap: 0;
+      width: 44px;
+      margin: 0 auto;
+      border-left: none !important;
+      border-radius: 12px;
+
+      .nav-icon-wrap {
+        width: 38px;
+        height: 38px;
+        border-radius: 12px;
+      }
+
+      // Active indicator: background only (no left-edge bar)
+      &.nav-item--active {
+        box-shadow: none !important;
+        background: rgba(0, 217, 255, 0.14) !important;
+
+        .nav-icon-wrap {
+          background: rgba(0, 217, 255, 0.18);
+        }
+      }
+    }
+
+    // User footer: stack vertically, centered
+    .sidenav-user--collapsed {
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      padding: 12px 0 18px;
+    }
+  }
+}
+
+// Brand logo circle
+.sidenav-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px 0 24px;
+  border-bottom: 1px solid rgba(0, 217, 255, 0.08);
+}
+
+.logo-circle {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #0066cc 0%, #00D9FF 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.5px;
+  box-shadow: 0 0 20px rgba(0, 217, 255, 0.3);
+}
+
+// Nav list
+.sidenav-nav {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 16px 12px;
+  overflow-y: auto;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background 0.18s ease, color 0.18s ease;
+  border-left: 3px solid transparent;
+
+  &:hover {
+    background: rgba(0, 217, 255, 0.07);
+    color: rgba(255, 255, 255, 0.85);
+
+    .nav-icon-wrap {
+      background: rgba(0, 217, 255, 0.1);
+    }
+  }
+
+  &--active {
+    background: rgba(0, 217, 255, 0.11) !important;
+    color: var(--color-accent) !important;
+    border-left-color: var(--color-accent);
+
+    .nav-icon-wrap {
+      background: rgba(0, 217, 255, 0.15);
+    }
+
+    .nav-icon {
+      color: var(--color-accent);
+    }
+  }
+}
+
+.nav-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  color: inherit;
+}
+
+.nav-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+// Logout footer
+.sidenav-footer {
+  padding: 16px 12px 24px;
+  border-top: 1px solid rgba(0, 217, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: none;
+  background: rgba(255, 80, 80, 0.08);
+  color: rgba(255, 100, 100, 0.7);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    background: rgba(255, 80, 80, 0.18);
+    color: #ff6b6b;
+  }
+}
+
+// ── Main content area ─────────────────────────────────────────────────────────
+.admin-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: var(--color-primary);
+}
+
+// ── Header bar ────────────────────────────────────────────────────────────────
+.admin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 24px;
+  height: 58px;
+  flex-shrink: 0;
+  background: var(--glass-bg);
+  backdrop-filter: var(--glass-blur);
+  border-bottom: 1px solid rgba(0, 217, 255, 0.10);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.menu-toggle {
+  // Always visible — collapses sidenav on desktop, toggles open/close on mobile
+}
+
+// ── Page content ──────────────────────────────────────────────────────────────
+.admin-main {
+  flex: 1;
+  min-width: 0;
+  padding: 28px 32px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+// ── Responsive ────────────────────────────────────────────────────────────────
+@media (max-width: 768px) {
+  .admin-main {
+    padding: 16px;
+  }
+
+  .admin-sidenav {
+    width: 220px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .admin-main {
+    padding: 32px 40px;
+  }
+}

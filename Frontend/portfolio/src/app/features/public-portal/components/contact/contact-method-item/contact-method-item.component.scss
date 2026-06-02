@@ -1,0 +1,90 @@
+// Contact method item card — glassmorphism pill card with icon, label, link
+
+// ─── Color map per method type ────────────────────────────────────────────────
+:host {
+  display: contents;
+}
+
+.contact-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.1rem 1.25rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  backdrop-filter: blur(6px);
+  transition: background 200ms ease, border-color 200ms ease, box-shadow 200ms ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.07);
+    border-color: rgba(0, 217, 255, 0.3);
+    box-shadow: 0 4px 20px rgba(0, 217, 255, 0.06);
+  }
+}
+
+// ─── Icon wrapper ─────────────────────────────────────────────────────────────
+.item-icon-wrap {
+  flex-shrink: 0;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 217, 255, 0.1);
+
+  mat-icon {
+    font-size: 1.25rem;
+    width: 1.25rem;
+    height: 1.25rem;
+    color: #00d9ff;
+  }
+
+  // Per-type accent colours
+  &--email { background: rgba(0, 217, 255, 0.1);   mat-icon { color: #00d9ff; } }
+  &--phone { background: rgba(74, 255, 145, 0.1);  mat-icon { color: #4aff91; } }
+  &--linkedin { background: rgba(74, 158, 255, 0.12); mat-icon { color: #4a9eff; } }
+  &--github { background: rgba(200, 200, 200, 0.08); mat-icon { color: #c8c8c8; } }
+  &--twitter { background: rgba(29, 161, 242, 0.12); mat-icon { color: #1da1f2; } }
+  &--website { background: rgba(156, 107, 255, 0.12); mat-icon { color: #9c6bff; } }
+}
+
+// ─── Text content ─────────────────────────────────────────────────────────────
+.item-content {
+  flex: 1;
+  min-width: 0; // allow text truncation
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.item-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1;
+}
+
+.item-value {
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.85);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+}
+
+// ─── Action button ────────────────────────────────────────────────────────────
+.item-action {
+  flex-shrink: 0;
+  color: rgba(255, 255, 255, 0.35) !important;
+  transition: color 200ms ease !important;
+
+  &:hover {
+    color: #00d9ff !important;
+  }
+}

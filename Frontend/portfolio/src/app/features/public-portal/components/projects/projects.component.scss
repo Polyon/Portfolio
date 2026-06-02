@@ -1,0 +1,140 @@
+// Projects section — responsive CSS Grid, glassmorphism cards, stagger animation
+
+.projects-section {
+  position: relative;
+  padding: 6rem 0 4rem;
+  overflow: hidden;
+
+  // Subtle ambient glow
+  &::before {
+    content: '';
+    position: absolute;
+    top: 5%;
+    right: -8%;
+    width: 450px;
+    height: 450px;
+    background: radial-gradient(circle, rgba(0, 217, 255, 0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+// ─── Loading / Error / Empty ──────────────────────────────────────────────────
+.projects-loading,
+.projects-error,
+.projects-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 18vh;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.95rem;
+  flex-direction: column;
+  text-align: center;
+
+  mat-icon {
+    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
+    opacity: 0.45;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.projects-error mat-icon {
+  color: rgba(255, 200, 0, 0.7);
+  opacity: 1;
+}
+
+// ─── Container ───────────────────────────────────────────────────────────────
+// NOTE: z-index intentionally omitted here. Adding z-index would create a
+// stacking context that traps the project-card popup (position:fixed z-index:1001)
+// inside it, causing the popup to paint beneath later sections (services, contact)
+// which each have their own z-index:1 stacking contexts that follow in DOM order.
+.projects-container {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+// ─── Section header ──────────────────────────────────────────────────────────
+.section-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.section-eyebrow {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #00D9FF;
+  margin-bottom: 0.6rem;
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 1rem;
+  line-height: 1.15;
+}
+
+.section-divider {
+  width: 3rem;
+  height: 3px;
+  background: linear-gradient(90deg, #00D9FF, transparent);
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+// ─── Projects grid ────────────────────────────────────────────────────────────
+.projects-grid {
+  display: grid;
+  gap: 1.5rem;
+
+  // Mobile: 1 column
+  grid-template-columns: 1fr;
+
+  // Tablet (640px): 2 columns
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  // Desktop (1024px): 3 columns
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  // Wide (1280px): still 3 columns, more generous gap
+  @media (min-width: 1280px) {
+    gap: 1.75rem;
+  }
+}
+
+// Ensure list items fill their grid cell
+.projects-grid > [role='listitem'] {
+  display: flex;
+  flex-direction: column;
+
+  app-project-card {
+    flex: 1;
+  }
+}
+
+// ─── Responsive adjustments ───────────────────────────────────────────────────
+@media (max-width: 599px) {
+  .projects-container {
+    padding: 0 1rem;
+  }
+
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+}

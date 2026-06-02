@@ -1,0 +1,193 @@
+@use 'sass:color';
+
+// Hero section — glassmorphism dark layout
+.hero-section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  padding: 5rem 0 3rem;
+  overflow: hidden;
+
+  // Subtle radial glow in the top-right corner
+  &::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -10%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(0, 217, 255, 0.08) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+// ─── Loading & Error ────────────────────────────────────────────────────────
+.hero-loading,
+.hero-error {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+.hero-error {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.95rem;
+}
+
+// ─── Two-column container ───────────────────────────────────────────────────
+.hero-container {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 4rem;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 0 2rem;
+
+  // Tablet: single column
+  @media (max-width: 1023px) {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2.5rem;
+  }
+}
+
+// ─── Text column ────────────────────────────────────────────────────────────
+.hero-text-col {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.hero-greeting {
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: rgba(0, 217, 255, 0.8);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.hero-name {
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #ffffff;
+  margin: 0;
+
+  .hero-name-accent {
+    color: #00D9FF;
+  }
+}
+
+.hero-tagline {
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.7);
+  line-height: 1.6;
+  max-width: 520px;
+  margin: 0;
+
+  @media (max-width: 1023px) {
+    max-width: 100%;
+  }
+}
+
+// ─── CTA buttons ────────────────────────────────────────────────────────────
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+
+  @media (max-width: 1023px) {
+    justify-content: center;
+  }
+
+  @media (max-width: 420px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.cta-primary {
+  background-color: #00D9FF !important;
+  color: #0D1B2A !important;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  padding: 0 1.75rem;
+  height: 48px;
+  border-radius: 6px;
+  transition: background-color 200ms ease, transform 150ms ease;
+
+  &:hover {
+    background-color: color.adjust(#00D9FF, $lightness: 8%) !important;
+    transform: translateY(-1px);
+  }
+}
+
+.cta-secondary {
+  color: #00D9FF !important;
+  border-color: rgba(0, 217, 255, 0.45) !important;
+  font-weight: 600;
+  padding: 0 1.75rem;
+  height: 48px;
+  border-radius: 6px;
+  transition: border-color 200ms ease, background-color 200ms ease;
+
+  &:hover {
+    border-color: #00D9FF !important;
+    background-color: rgba(0, 217, 255, 0.06) !important;
+  }
+}
+
+// ─── Image column ────────────────────────────────────────────────────────────
+.hero-image-col {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hero-image-wrapper {
+  position: relative;
+
+  // Outer glow ring
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    background: conic-gradient(
+      from 180deg at 50% 50%,
+      rgba(0, 217, 255, 0.35) 0deg,
+      transparent 120deg,
+      rgba(0, 217, 255, 0.15) 240deg,
+      transparent 360deg
+    );
+    animation: spin 8s linear infinite;
+    z-index: -1;
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+// ─── Scroll indicator ────────────────────────────────────────────────────────
+.hero-scroll-indicator {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  padding: 2rem 0 1rem;
+  margin-top: auto;
+}

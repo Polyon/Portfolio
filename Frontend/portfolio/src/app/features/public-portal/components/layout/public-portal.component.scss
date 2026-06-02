@@ -1,0 +1,24 @@
+// Public portal root layout — dark glassmorphism container
+:host {
+  display: block;
+  min-height: 100vh;
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+  // Prevent horizontal overflow on any viewport (T093)
+  overflow-x: hidden;
+}
+
+.portal-main {
+  // Reserve top space for the floating header (58px height + 14px top offset + 8px breathing room)
+  padding-top: 88px;
+  // Prevent content from creating horizontal scroll (T093)
+  overflow-x: hidden;
+
+  @media (max-width: 767px) {
+    padding-top: 76px;
+  }
+
+  @media (max-width: 479px) {
+    padding-top: 68px;
+  }
+}

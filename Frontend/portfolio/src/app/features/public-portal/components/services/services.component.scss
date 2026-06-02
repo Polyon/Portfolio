@@ -1,0 +1,137 @@
+// Services section — responsive CSS Grid, stagger animation
+
+.services-section {
+  position: relative;
+  padding: 6rem 0 4rem;
+  overflow: hidden;
+
+  // Ambient glow — left side to contrast the projects section glow
+  &::before {
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: -8%;
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(circle, rgba(0, 217, 255, 0.04) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+// ─── Loading / Error / Empty ──────────────────────────────────────────────────
+.services-loading,
+.services-error,
+.services-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 18vh;
+  gap: 0.75rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.95rem;
+  flex-direction: column;
+  text-align: center;
+
+  mat-icon {
+    font-size: 2rem;
+    width: 2rem;
+    height: 2rem;
+    opacity: 0.45;
+  }
+
+  p {
+    margin: 0;
+  }
+}
+
+.services-error mat-icon {
+  color: rgba(255, 200, 0, 0.7);
+  opacity: 1;
+}
+
+// ─── Container ───────────────────────────────────────────────────────────────
+.services-container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+}
+
+// ─── Section header ──────────────────────────────────────────────────────────
+.section-header {
+  text-align: center;
+  margin-bottom: 3.5rem;
+}
+
+.section-eyebrow {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #00D9FF;
+  margin-bottom: 0.6rem;
+}
+
+.section-title {
+  font-size: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 1rem;
+  line-height: 1.15;
+}
+
+.section-divider {
+  width: 3rem;
+  height: 3px;
+  background: linear-gradient(90deg, #00D9FF, transparent);
+  border-radius: 2px;
+  margin: 0 auto;
+}
+
+// ─── Services grid ────────────────────────────────────────────────────────────
+.services-grid {
+  display: grid;
+  gap: 1.5rem;
+
+  // Mobile: 1 column
+  grid-template-columns: 1fr;
+
+  // Tablet (640px): 2 columns
+  @media (min-width: 640px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  // Desktop (1024px): 3 columns
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  // Wide
+  @media (min-width: 1280px) {
+    gap: 1.75rem;
+  }
+}
+
+// Ensure list items stretch to fill their cell so all cards match height
+.services-grid > [role='listitem'] {
+  display: flex;
+  flex-direction: column;
+
+  app-service-card {
+    flex: 1;
+  }
+}
+
+// ─── Responsive ───────────────────────────────────────────────────────────────
+@media (max-width: 599px) {
+  .services-container {
+    padding: 0 1rem;
+  }
+
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+}
