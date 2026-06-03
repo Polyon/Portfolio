@@ -3,7 +3,7 @@ export const environment = {
   apiUrl: '', // Set to production backend URL at deploy time
   apiPrefix: '/api',
   // Set to the MongoDB ObjectId of the portfolio owner at deploy time
-  portfolioUserId: '',
+  portfolioUserId: '69e73db64555bd0cc8ab3e92',
   seo: {
     siteName: 'My Portfolio',
     author: 'Polyon Mondal',
