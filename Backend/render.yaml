@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: portfolio-backend
+    name: Portfolio
     runtime: node
     rootDir: Backend
     buildCommand: npm ci && npm run build
