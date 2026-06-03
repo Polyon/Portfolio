@@ -1,7 +1,7 @@
 {
   "name": "portfolio-rest",
   "version": "1.0.0",
-  "description": "Polyon Portfolio REST API Backend",
+  "description": "Polyon Portfolio REST API Backend.",
   "license": "ISC",
   "author": "Polyon Mondal",
   "main": "dist/main.js",
