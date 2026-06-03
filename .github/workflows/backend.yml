@@ -34,9 +34,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Create .env file
+      - name: Create .env for build
         run: |
-          echo "NODE_ENV=production" >> .env
+          echo "NODE_ENV=production" > .env
           echo "PORT=3000" >> .env
           echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> .env
           echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
@@ -61,6 +61,31 @@ jobs:
 
       - name: Build
         run: npm run build
+
+      - name: Create .env for test
+        run: |
+          echo "NODE_ENV=test" > .env
+          echo "PORT=3000" >> .env
+          echo "MONGODB_URI=${{ secrets.MONGODB_URI }}" >> .env
+          echo "JWT_SECRET=${{ secrets.JWT_SECRET }}" >> .env
+          echo "JWT_EXPIRES_IN=24h" >> .env
+          echo "JWT_REFRESH_SECRET=${{ secrets.JWT_REFRESH_SECRET }}" >> .env
+          echo "JWT_REFRESH_EXPIRES_IN=7d" >> .env
+          echo "ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}" >> .env
+          echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}" >> .env
+          echo "CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}" >> .env
+          echo "CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}" >> .env
+          echo "CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}" >> .env
+          echo "SMTP_HOST=smtp.gmail.com" >> .env
+          echo "SMTP_PORT=587" >> .env
+          echo "SMTP_SECURE=false" >> .env
+          echo "SMTP_USER=${{ secrets.SMTP_USER }}" >> .env
+          echo "SMTP_PASS=${{ secrets.SMTP_PASS }}" >> .env
+          echo "SMTP_FROM=${{ secrets.SMTP_FROM }}" >> .env
+          echo "OWNER_NAME=${{ secrets.OWNER_NAME }}" >> .env
+          echo "PORTFOLIO_URL=${{ secrets.PORTFOLIO_URL }}" >> .env
+          echo "ADMIN_PORTAL_URL=${{ secrets.ADMIN_PORTAL_URL }}" >> .env
+          echo "REPLY_SLA_HOURS=48" >> .env
 
       - name: Run tests
         run: npm test
