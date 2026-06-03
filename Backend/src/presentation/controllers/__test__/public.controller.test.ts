@@ -47,7 +47,7 @@ describe('GET /api/public routes', () => {
       await Profile.create({ userId, firstName: 'John', lastName: 'Doe', bio: 'Hello', isPublished: true });
       const res = await supertest(app).get(`/api/public/profile?userId=${userId}`);
       expect(res.status).toBe(200);
-      expect(res.body.bio).toBe('Hello');
+      expect(res.body.data.bio).toBe('Hello');
     });
 
     it('does NOT return unpublished profile', async () => {
@@ -68,8 +68,8 @@ describe('GET /api/public routes', () => {
       await Skill.create({ userId, name: 'Draft', category: SkillCategory.BACKEND, proficiencyLevel: 5, isPublished: false });
       const res = await supertest(app).get(`/api/public/skills?userId=${userId}`);
       expect(res.status).toBe(200);
-      expect(res.body).toHaveLength(1);
-      expect(res.body[0].name).toBe('TypeScript');
+      expect(res.body.data).toHaveLength(1);
+      expect(res.body.data[0].name).toBe('TypeScript');
     });
 
     it('filters by category', async () => {
@@ -77,8 +77,8 @@ describe('GET /api/public routes', () => {
       await Skill.create({ userId, name: 'Node', category: SkillCategory.BACKEND, proficiencyLevel: 5, isPublished: true });
       const res = await supertest(app).get(`/api/public/skills?userId=${userId}&category=${SkillCategory.FRONTEND}`);
       expect(res.status).toBe(200);
-      expect(res.body).toHaveLength(1);
-      expect(res.body[0].name).toBe('Angular');
+      expect(res.body.data).toHaveLength(1);
+      expect(res.body.data[0].name).toBe('Angular');
     });
   });
 
@@ -108,7 +108,7 @@ describe('GET /api/public routes', () => {
       expect(res1.status).toBe(200);
       const res2 = await supertest(app).get(`/api/public/profile?userId=${userId}`);
       expect(res2.status).toBe(200);
-      expect(res2.body.bio).toBe(res1.body.bio);
+      expect(res2.body.data.bio).toBe(res1.body.data.bio);
     });
 
     it('reflects new data after cache is invalidated', async () => {
@@ -120,7 +120,7 @@ describe('GET /api/public routes', () => {
       await Profile.updateOne({ userId }, { bio: 'Updated bio' });
       const res2 = await supertest(app).get(`/api/public/profile?userId=${userId}`);
       expect(res2.status).toBe(200);
-      expect(res2.body.bio).toBe('Updated bio');
+      expect(res2.body.data.bio).toBe('Updated bio');
     });
   });
 
@@ -136,8 +136,8 @@ describe('GET /api/public routes', () => {
       });
       const res = await supertest(app).get(`/api/public/contact?userId=${userId}`);
       expect(res.status).toBe(200);
-      expect(res.body.email).toBe('pub@example.com');
-      expect(res.body.phone).toBeUndefined();
+      expect(res.body.data.email).toBe('pub@example.com');
+      expect(res.body.data.phone).toBeUndefined();
     });
   });
 });

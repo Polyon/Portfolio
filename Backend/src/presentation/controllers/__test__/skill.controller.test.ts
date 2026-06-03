@@ -127,7 +127,7 @@ describe('Skills Controller (integration)', () => {
         .set('Authorization', `Bearer ${token}`)
         .send({ name: 'Docker', category: 'DEVOPS', proficiencyLevel: 3 });
 
-      const skillId = createRes.body.data._id as string;
+      const skillId = createRes.body.data.id as string;
 
       const res = await request(app)
         .get(`/api/admin/skills/${skillId}`)
@@ -155,7 +155,7 @@ describe('Skills Controller (integration)', () => {
         .set('Authorization', `Bearer ${token}`)
         .send({ name: 'CSS', category: 'FRONTEND', proficiencyLevel: 3 });
 
-      const skillId = createRes.body.data._id as string;
+      const skillId = createRes.body.data.id as string;
 
       const res = await request(app)
         .put(`/api/admin/skills/${skillId}`)
@@ -185,7 +185,7 @@ describe('Skills Controller (integration)', () => {
         .set('Authorization', `Bearer ${token}`)
         .send({ name: 'Redis', category: 'DATABASE', proficiencyLevel: 3 });
 
-      const skillId = createRes.body.data._id as string;
+      const skillId = createRes.body.data.id as string;
 
       const res = await request(app)
         .delete(`/api/admin/skills/${skillId}`)
@@ -197,7 +197,7 @@ describe('Skills Controller (integration)', () => {
       const listRes = await request(app)
         .get('/api/admin/skills')
         .set('Authorization', `Bearer ${token}`);
-      expect(listRes.body.data.find((s: { _id: string }) => s._id === skillId)).toBeUndefined();
+      expect(listRes.body.data.find((s: { id: string }) => s.id === skillId)).toBeUndefined();
     });
 
     it('returns 404 for non-existent skill', async () => {

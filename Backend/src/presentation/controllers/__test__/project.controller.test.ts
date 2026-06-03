@@ -12,7 +12,7 @@ describe('Project Controller (integration)', () => {
   const samplePayload = {
     name: 'Portfolio Site',
     description: 'My portfolio website',
-    status: 'IN_PROGRESS',
+    status: 'InProgress',
     startDate: '2023-01-01',
   };
 
@@ -78,7 +78,7 @@ describe('Project Controller (integration)', () => {
       await request(app)
         .post('/api/admin/projects')
         .set('Authorization', `Bearer ${token}`)
-        .send({ ...samplePayload, name: 'Second Project', status: 'DEPLOYED' });
+        .send({ ...samplePayload, name: 'Second Project', status: 'Deployed' });
     });
 
     it('returns all projects with pagination', async () => {
@@ -93,12 +93,12 @@ describe('Project Controller (integration)', () => {
 
     it('filters by status', async () => {
       const res = await request(app)
-        .get('/api/admin/projects?status=DEPLOYED')
+        .get('/api/admin/projects?status=Deployed')
         .set('Authorization', `Bearer ${token}`);
 
       expect(res.status).toBe(200);
       expect(res.body.data).toHaveLength(1);
-      expect(res.body.data[0].status).toBe('DEPLOYED');
+      expect(res.body.data[0].status).toBe('Deployed');
     });
   });
 
@@ -111,7 +111,7 @@ describe('Project Controller (integration)', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(samplePayload);
 
-      const projectId = createRes.body.data._id as string;
+      const projectId = createRes.body.data.id as string;
 
       const res = await request(app)
         .get(`/api/admin/projects/${projectId}`)
@@ -139,7 +139,7 @@ describe('Project Controller (integration)', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(samplePayload);
 
-      const projectId = createRes.body.data._id as string;
+      const projectId = createRes.body.data.id as string;
 
       const res = await request(app)
         .put(`/api/admin/projects/${projectId}/featured`)
@@ -156,7 +156,7 @@ describe('Project Controller (integration)', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(samplePayload);
 
-      const projectId = createRes.body.data._id as string;
+      const projectId = createRes.body.data.id as string;
 
       const res = await request(app)
         .put(`/api/admin/projects/${projectId}/featured`)
@@ -176,7 +176,7 @@ describe('Project Controller (integration)', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(samplePayload);
 
-      const projectId = createRes.body.data._id as string;
+      const projectId = createRes.body.data.id as string;
 
       const res = await request(app)
         .delete(`/api/admin/projects/${projectId}`)

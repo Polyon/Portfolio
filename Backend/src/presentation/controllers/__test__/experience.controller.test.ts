@@ -105,7 +105,7 @@ describe('Experience Controller (integration)', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(samplePayload);
 
-      const expId = createRes.body.data._id as string;
+      const expId = createRes.body.data.id as string;
 
       const res = await request(app)
         .get(`/api/admin/experiences/${expId}`)
@@ -133,7 +133,7 @@ describe('Experience Controller (integration)', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(samplePayload);
 
-      const expId = createRes.body.data._id as string;
+      const expId = createRes.body.data.id as string;
 
       const res = await request(app)
         .put(`/api/admin/experiences/${expId}`)
@@ -154,7 +154,7 @@ describe('Experience Controller (integration)', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(samplePayload);
 
-      const expId = createRes.body.data._id as string;
+      const expId = createRes.body.data.id as string;
 
       const res = await request(app)
         .delete(`/api/admin/experiences/${expId}`)
@@ -190,7 +190,7 @@ describe('Experience Controller (integration)', () => {
         .set('Authorization', `Bearer ${tok}`)
         .send({ ...samplePayload });
 
-      const expId = createRes.body.data._id as string;
+      const expId = createRes.body.data.id as string;
 
       const res = await request(app)
         .post(`/api/admin/experiences/${expId}/skills`)
@@ -206,7 +206,7 @@ describe('Experience Controller (integration)', () => {
         .set('Authorization', `Bearer ${token}`)
         .send(samplePayload);
 
-      const expId = createRes.body.data._id as string;
+      const expId = createRes.body.data.id as string;
 
       const res = await request(app)
         .post(`/api/admin/experiences/${expId}/skills`)

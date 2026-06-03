@@ -125,7 +125,7 @@ describe('Public API – Performance Tests', () => {
   it('GET /api/public/projects returns featured projects first', async () => {
     const res = await supertest(app).get(`/api/public/projects?userId=${userId}`);
     expect(res.status).toBe(200);
-    const projects: Array<{ isFeatured: boolean }> = res.body;
+      const projects: Array<{ isFeatured: boolean }> = res.body.data as Array<{ isFeatured: boolean }>;
     expect(projects.length).toBeGreaterThan(0);
     const firstNonFeatured = projects.findIndex((p) => !p.isFeatured);
     const lastFeatured = projects.map((p) => p.isFeatured).lastIndexOf(true);
@@ -138,7 +138,7 @@ describe('Public API – Performance Tests', () => {
   it('GET /api/public/experiences returns entries sorted by startDate descending', async () => {
     const res = await supertest(app).get(`/api/public/experiences?userId=${userId}`);
     expect(res.status).toBe(200);
-    const experiences: Array<{ startDate: string }> = res.body;
+      const experiences: Array<{ startDate: string }> = res.body.data as Array<{ startDate: string }>;
     expect(experiences.length).toBeGreaterThan(1);
     for (let i = 1; i < experiences.length; i++) {
       expect(new Date(experiences[i - 1].startDate).getTime()).toBeGreaterThanOrEqual(

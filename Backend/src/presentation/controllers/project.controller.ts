@@ -153,12 +153,14 @@ router.get('/:id', async (req: AuthenticatedRequest, res: Response) => {
     return;
   }
   const skillLinks = await ProjectSkill.find({ projectId: String(req.params['id']) }).populate('skillId');
+  const skillIds = await projectService.getSkills(String(req.params['id']));
   const obj = project.toJSON() as Record<string, unknown>;
   obj['skills'] = skillLinks.map((l) =>
     typeof (l.skillId as { toJSON?: () => unknown }).toJSON === 'function'
       ? (l.skillId as { toJSON: () => unknown }).toJSON()
       : l.skillId
   );
+  obj['skillIds'] = skillIds;
   res.json(buildSuccessResponse(obj));
 });
 
