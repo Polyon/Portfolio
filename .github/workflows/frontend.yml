@@ -63,4 +63,9 @@ jobs:
         run: npm run build
 
       - name: Deploy to Netlify
-        run: npx netlify deploy --prod --dir dist/portfolio/browser --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} --site ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          npx netlify deploy \
+          --prod \
+          --dir dist/portfolio/browser \
+          --auth ${{ secrets.NETLIFY_AUTH_TOKEN }} \
+          --site ${{ secrets.NETLIFY_SITE_ID }}
